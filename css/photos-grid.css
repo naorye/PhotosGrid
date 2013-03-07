@@ -1,0 +1,34 @@
+body {
+    overflow-y: scroll;
+}
+
+.photos-grid .photo-container {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: relative; 
+    float: left;    
+    padding: 0;
+}
+
+.photos-grid .photo-container a {
+    margin: 0;
+    padding: 0;
+}
+
+.photos-grid .photo-container img {
+    max-width: none;
+    margin-top: 0;
+}
+
+.photos-grid .photo-container .photo-wrapper {
+    overflow: hidden;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  line-height: 0;
+  content: "";
+}
