@@ -1,5 +1,15 @@
 (function($) {
 
+    var Utils = {
+        parseSize: function(size) {
+            size = parseFloat(size);
+            if (isNaN(size)) {
+                size = null;
+            }
+            return size;
+        }
+    };
+
     var PhotosGrid = function (container, options) {
         this.container = container;
         this.parseOptions(options);
@@ -14,28 +24,22 @@
             data_photoUrl: "url",
             data_height: "height",
             data_width: "width",
-            totalWidth: null,
+            maxWidth: null,
             margin: 3
         },
         parseOptions: function(options) {
             options = options || {};
             this.options = $.extend({}, this.defaults, options);
-            this.setTotalWidth(this.options.totalWidth);
-            this.options.margin = this.options.margin && parseInt(this.options.margin, 10);
+            this.margin = Utils.parseSize(this.options.margin);
+            this.setMaxWidth(this.options.maxWidth);
         },
-        setTotalWidth: function(totalWidth) {
-            var containrWidth = this.container.width();
-            if (!totalWidth) {
-                totalWidth = containrWidth;
+        setMaxWidth: function(maxWidth) {
+            maxWidth = Utils.parseSize(maxWidth);
+            if (maxWidth) {
+                this.container.css("max-width", maxWidth);
             } else {
-                totalWidth = parseInt(totalWidth, 10);
-                if (isNaN(totalWidth)) {
-                    totalWidth = containrWidth;
-                } else if (totalWidth > containrWidth) {
-                        totalWidth = containrWidth;
-                }
+                this.container.css("max-width", "");
             }
-            this.totalWidth = totalWidth;
         },
         fetchData: function(callback) {
             if (this.options.data) {
@@ -49,7 +53,7 @@
         },
         dataFetched: function(items) {
             this.items = items;
-            this.renderGrid(this.totalWidth);
+            this.renderGrid();
         },
         generateGridModel: function() {
             var itemsCopy = this.items.slice(0);
@@ -92,13 +96,12 @@
         },
         generateGridRowModel: function(items) {
             var row = [],
-                len = 0,
-                margin = this.options.margin;
+                len = 0;
 
             while (items.length > 0 && len < this.totalWidth) {
                 item = items.shift();
                 row.push(item);
-                len += (item.width + margin * 2);
+                len += (item.width + this.margin * 2);
             }
 
             var delta = len - this.totalWidth;
@@ -138,7 +141,7 @@
                 "</div>";
 
             var photoElem = $(photoStructure).css({
-                margin: this.options.margin + "px"
+                margin: this.margin + "px"
             });
             photoElem.find(".photo-wrapper").css({
                 width: (photo.wrapper_width || 120) + "px",
@@ -154,13 +157,12 @@
 
             return photoElem;
         },
-        renderGrid: function(totalWidth) {
-            this.container.empty().width("auto");
-            this.setTotalWidth(totalWidth);
+        renderGrid: function() {
+            this.container.empty();
+            this.totalWidth = this.container.width();
 
             var gridModel = this.generateGridModel();
 
-            this.container.width(this.totalWidth);
             var clearfix = $("<div class='clearfix'></div>")
                 .appendTo(this.container);
 
