@@ -52,7 +52,7 @@
 
             // Still more pixel to distribute because of decimal fractions that were omitted.
             var stillToCutOff = delta - cutsum;
-            while(stillToCutOff > 0) {
+            while (stillToCutOff > 0) {
                 for (i = 0; i < cutoff.length && stillToCutOff > 0; i++) {
                     // distribute pixels evenly until done
                     cutoff[i]++;
