@@ -4,10 +4,7 @@ $(document).ready(function() {
         fitWidthLastRow: false,
         mode: "increase",
         margin: 10,
-        maxWidth: 600
-    });
-
-    $(window).resize(function() {
-        element.data("photosGrid").renderGrid();
+        maxWidth: 600,
+        handleWindowResize: true
     });
 });

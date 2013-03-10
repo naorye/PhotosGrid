@@ -192,7 +192,8 @@
             data_width: "width",
             mode: "decrease",
             maxWidth: null,
-            margin: 3
+            margin: 3,
+            handleWindowResize: true
         },
         parseOptions: function(options) {
             options = options || {};
@@ -239,6 +240,10 @@
         dataFetched: function(items) {
             this.items = items;
             this.renderGrid();
+
+            if (this.options.handleWindowResize) {
+                $(window).resize($.proxy(this.renderGrid, this));
+            }
         },
         createItemsCopy: function() {
             var itemsCopy = [];
