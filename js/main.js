@@ -4,6 +4,7 @@ $(document).ready(function() {
         data_width: "width",
         data_height: "height",
         data_url: "url",
+        //data_href: "url",
         fitWidthLastRow: false,
         mode: "increase",
         margin: 10,

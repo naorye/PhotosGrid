@@ -187,6 +187,7 @@
             data_photoUrl: "url",
             data_height: "height",
             data_width: "width",
+            data_href: "href",
             mode: "decrease",
             maxWidth: null,
             margin: 3,
@@ -250,6 +251,7 @@
                     url: this.items[i][this.options.data_photoUrl],
                     width: this.items[i][this.options.data_width],
                     height: this.items[i][this.options.data_height],
+                    href: this.items[i][this.options.data_href],
                     originalItem: this.items[i]
                 });
             }
@@ -274,7 +276,7 @@
             var photoStructure =
                 "<div class='photo-container'>" +
                     "<div class='photo-wrapper'>" +
-                        "<a class='photo-anchor' href='javascript:void(0);'><img /></a>" +
+                        "<a class='photo-anchor'><img /></a>" +
                     "</div>" +
                 "</div>";
 
@@ -285,15 +287,20 @@
                 width: (photo.wrapper_width || 120) + "px",
                 height: (photo.wrapper_height || 120) + "px"
             });
-            photoElem.find(".photo-anchor").click($.proxy(function() {
-                var photoClickCallback = this.options.photoClickCallback,
-                    container = this.container;
-                if (photoClickCallback &&
-                    typeof photoClickCallback === "function") {
-                    photoClickCallback(photo.originalItem);
-                }
-                container.trigger("photo-click", photo.originalItem);
-            }, this));
+
+            /* jshint scripturl:true */
+            var href = photo.href ? photo.href : "javascript:void(0);";
+            photoElem.find(".photo-anchor")
+                .attr("href", href)
+                .click($.proxy(function() {
+                    var photoClickCallback = this.options.photoClickCallback,
+                        container = this.container;
+                    if (photoClickCallback &&
+                        typeof photoClickCallback === "function") {
+                        photoClickCallback(photo.originalItem);
+                    }
+                    container.trigger("photo-click", photo.originalItem);
+                }, this));
             photoElem.find("img")
                 .attr("src", photo.url)
                 .css({
@@ -328,8 +335,3 @@
     };
 
 })(jQuery);
-
-
-
-
-
