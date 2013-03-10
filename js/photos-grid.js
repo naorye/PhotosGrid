@@ -22,7 +22,7 @@
     var GridRowGenerator = function(container, margin, options) {
         this.container = container;
         this.margin = margin;
-        this.parseOptions(options || {});
+        this.options = $.extend({}, this.defaults, options);
     };
     $.extend(GridRowGenerator.prototype, {
         generateGridRowModel: function() {
@@ -31,7 +31,7 @@
         getGenerator: function() {
             return $.proxy(this.generateGridRowModel, this);
         },
-        parseOptions: function(options) {
+        defaults: {
         }
     });
 
@@ -106,9 +106,6 @@
     var IncreasedGridRowGenerator = inherit(GridRowGenerator, {
         defaults: {
             fitWidthLastRow: false
-        },
-        parseOptions: function(options) {
-            this.options = $.extend({}, this.defaults, options);
         },
         generateGridRowModel: function(items) {
             var row = [],
@@ -193,7 +190,8 @@
             mode: "decrease",
             maxWidth: null,
             margin: 3,
-            handleWindowResize: true
+            handleWindowResize: true,
+            photoClickCallback: null
         },
         parseOptions: function(options) {
             options = options || {};
@@ -251,7 +249,8 @@
                 itemsCopy.push({
                     url: this.items[i][this.options.data_photoUrl],
                     width: this.items[i][this.options.data_width],
-                    height: this.items[i][this.options.data_height]
+                    height: this.items[i][this.options.data_height],
+                    originalItem: this.items[i]
                 });
             }
             return itemsCopy;
@@ -286,6 +285,15 @@
                 width: (photo.wrapper_width || 120) + "px",
                 height: (photo.wrapper_height || 120) + "px"
             });
+            photoElem.find(".photo-anchor").click($.proxy(function() {
+                var photoClickCallback = this.options.photoClickCallback,
+                    container = this.container;
+                if (photoClickCallback &&
+                    typeof photoClickCallback === "function") {
+                    photoClickCallback(photo.originalItem);
+                }
+                container.trigger("photo-click", photo.originalItem);
+            }, this));
             photoElem.find("img")
                 .attr("src", photo.url)
                 .css({
