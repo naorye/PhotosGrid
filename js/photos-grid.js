@@ -174,7 +174,7 @@
     });
 
     var PhotosGrid = function (container, options) {
-        this.container = container;
+        this.container = container.addClass("photos-grid");
         this.parseOptions(options);
 
         this.fetchData($.proxy(this.dataFetched, this));
