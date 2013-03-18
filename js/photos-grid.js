@@ -325,6 +325,10 @@
                     this.createPhoto(photo).insertBefore(clearfix);
                 }
             }
+        },
+        destroy: function() {
+            this.container.find(".photo-anchor").unbind('click');
+            this.container.empty();
         }
     });
 
