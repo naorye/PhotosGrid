@@ -327,8 +327,8 @@
             }
         },
         destroy: function() {
-            this.container.find(".photo-anchor").unbind('click');
-            this.container.empty();
+            this.container.find('.photo-anchor').unbind('click');
+            this.container.removeClass('photos-grid').empty();
         }
     });
 
