@@ -174,6 +174,7 @@
     });
 
     var PhotosGrid = function (container, options) {
+        this.originalClass = container.attr("class");
         this.container = container.addClass("photos-grid");
         this.parseOptions(options);
 
@@ -322,19 +323,23 @@
             for(var rowIndex in gridModel) {
                 for(var photoIndex in gridModel[rowIndex]) {
                     var photo = gridModel[rowIndex][photoIndex];
-                    this.createPhoto(photo).insertBefore(clearfix);
+                    photo.photoElem = this.createPhoto(photo);
+                    photo.photoElem.insertBefore(clearfix);
                 }
             }
         },
         destroy: function() {
             this.container.find('.photo-anchor').unbind('click');
-            this.container.removeClass('photos-grid').empty();
+            this.container
+                .removeClass('photos-grid')
+                .empty()
+                .addClass(this.originalClass);
         }
     });
 
     $.fn.photosGrid = function(options) {
         var photosGrid = new PhotosGrid(this, options);
-        this.data("photosGrid", photosGrid);
+        this.data('photosGrid', photosGrid);
         return this;
     };
 
