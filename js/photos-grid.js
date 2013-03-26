@@ -294,7 +294,7 @@
                     "</div>" +
                 "</div>";
 
-            var photoElem = $(photoStructure).css({
+            var photoElem = photo.photoElem = $(photoStructure).css({
                 margin: this.margin + "px"
             });
             photoElem.find(".photo-wrapper").css({
@@ -311,7 +311,7 @@
                         container = this.container;
                     if (photoClickCallback &&
                         typeof photoClickCallback === "function") {
-                        photoClickCallback(photo.originalItem);
+                        photoClickCallback(photo.originalItem, photo.photoElem);
                     }
                     container.trigger("photo-click", photo.originalItem);
                 }, this));
@@ -336,8 +336,7 @@
             for(var rowIndex in gridModel) {
                 for(var photoIndex in gridModel[rowIndex]) {
                     var photo = gridModel[rowIndex][photoIndex];
-                    photo.photoElem = this.createPhoto(photo);
-                    photo.photoElem.insertBefore(clearfix);
+                    this.createPhoto(photo).insertBefore(clearfix);
                 }
             }
         },
