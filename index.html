@@ -18,10 +18,13 @@
             }
         </style>
         <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+        <link rel="stylesheet" href="css/jquery-ui-1.10.2.custom.min.css">
         <link rel="stylesheet" href="css/photos-grid.css">
         <link rel="stylesheet" href="css/main.css">
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+
+        
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -38,33 +41,207 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="brand" href="#">Photos Grid</a>
+                    <a class="brand" href="#home">Photos Grid</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li class="divider-vertical"></li>
+                            <li><a href="#demo">Demo</a></li>
+                            <li class="divider-vertical"></li>
+                            <li><a href="#api">API</a></li>
+                            <li class="divider-vertical"></li>
+                            <li><a href="#explanation">How it's work?</a></li>
+                            <li class="divider-vertical"></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="container">
-
-            <!-- Main hero unit for a primary marketing message or call to action -->
-            <div class="hero-unit">
+            <a name="home"></a>
+            <div class="row navbar-anchor home">
                 <h1>Photos Grid</h1>
-                <p>Photos Grid is a grid plugin for photos.</p>
-                <h2>Demo:</h2>
-
-                <div class="photos-grid"></div>
-
+                <p class="lead">
+                    Photos Grid is a responsive jQuery plugin that creates a grid from your photos.
+                </p>
             </div>
-
-            <hr>
-
-            <footer>
-                <p>&copy; Company 2012</p>
-            </footer>
-
-        </div> <!-- /container -->
+            <a name="demo"></a>
+            <div class="row navbar-anchor build-example">
+                <h3>Build your own live demonstration!</h3>
+                <p class="lead">
+                    Change the options and enjoy the result.
+                </p>
+                <div class="hero-unit">
+                    $(".photos-grid").photosGrid({
+                        <table class="properties">
+                            <tr>
+                                <td>url:</td>
+                                <td>"example-data/images.json",</td>
+                                <td>// URL for the json data</td>
+                            </tr>
+                            <tr>
+                                <td>data_width:</td>
+                                <td>"width",</td>
+                                <td>// Name of the property that represents the width</td>
+                            </tr>
+                            <tr>
+                                <td>data_height:</td>
+                                <td>"height",</td>
+                                <td>// Name of the property that represents the height</td>
+                            </tr>
+                            <tr>
+                                <td>data_url:</td>
+                                <td>"url",</td>
+                                <td>// Name of the property that represents the url</td>
+                            </tr>
+                            <tr>
+                                <td>mode:</td>
+                                <td>
+                                    <select id="mode-select">
+                                        <option>decrease</option>
+                                        <option>increase</option>
+                                    </select> ,
+                                </td>
+                                <td>// The mode of the Photo Grid: decrese or increse</td>
+                            </tr>
+                            <tr>
+                                <td>maxWidth:</td>
+                                <td>
+                                    <div class="tbl">
+                                        <div class="tbl-cl w70"><span id="maxWidth-slider-value"></span> px,</div>
+                                        <div class="tbl-cl w200"><div id="maxWidth-slider"></div></div>
+                                    <div>
+                                </td>
+                                <td>// Max width of the grid in pixels</td>
+                            </tr>
+                            <tr>
+                                <td>margin:</td>
+                                <td>
+                                    <div class="tbl">
+                                        <div class="tbl-cl w70"><span id="margin-slider-value"></span> px,</div>
+                                        <div class="tbl-cl w200"><div id="margin-slider"></div></div>
+                                    <div>
+                                </td>
+                                <td>// Margin between photos in pixels</td>
+                            </tr>
+                            <tr>
+                                <td>handleWindowResize:</td>
+                                <td>
+                                    <select id="handleWindowResize-select">
+                                        <option>true</option>
+                                        <option>false</option>
+                                    </select> ,
+                                </td>
+                                <td>// When true, re-render the grid on window resize</td>
+                            </tr>
+                            <tr>
+                                <td>photoClickCallback:</td>
+                                <td>
+                                    <select id="photoClickCallback-select">
+                                        <option>select</option>
+                                        <option>alert</option>
+                                    </select> ,
+                                </td>
+                                <td>// Demonstration of photo click callback</td>
+                            </tr>
+                            <tr>
+                                <td>fitWidthLastRow:</td>
+                                <td>
+                                    <select id="fitWidthLastRow-select">
+                                        <option>true</option>
+                                        <option>false</option>
+                                    </select>
+                                </td>
+                                <td>// In Increase mode, true will increase last row to fit grid width</td>
+                            </tr>
+                        </table>
+                    });
+                    <hr>
+                    <div class="photos-grid-wrapper">
+                        <div class="photos-grid"></div>
+                    </div>
+                </div>
+            </div>
+            <a name="api"></a>
+            <div class="row navbar-anchor documentation">
+                <h3>Photos Grid Documentation</h3>
+                <p class="lead">
+                    All you can know about using Photos Grid.
+                </p>
+                <div class="hero-unit">
+                    Photos Grid creation options:
+                    <table>
+                        <tr>
+                            <td>Option</td>
+                            <td>Description</td>
+                            <td>Possible values</td>
+                        </tr>
+                        <tr>
+                            <td>url</td>
+                            <td>URL</td>
+                            <td>URL for the json data</td>
+                        </tr>
+                        <tr>
+                            <td>data_width</td>
+                            <td>String ("width")</td>
+                            <td>Name of the property that represents the width</td>
+                        </tr>
+                        <tr>
+                            <td>data_height</td>
+                            <td>String ("height")</td>
+                            <td>Name of the property that represents the height</td>
+                        </tr>
+                        <tr>
+                            <td>data_url</td>
+                            <td>String ("url")</td>
+                            <td>Name of the property that represents the url</td>
+                        </tr>
+                        <tr>
+                            <td>mode</td>
+                            <td>decrease, increase</td>
+                            <td>The mode of the Photo Grid: decrese or increse</td>
+                        </tr>
+                        <tr>
+                            <td>maxWidth</td>
+                            <td>Size (container width)</td>
+                            <td>Max width of the grid in pixels</td>
+                        </tr>
+                        <tr>
+                            <td>margin</td>
+                            <td>Size (3px)</td>
+                            <td>Margin between photos in pixels</td>
+                        </tr>
+                        <tr>
+                            <td>handleWindowResize</td>
+                            <td>true, false</td>
+                            <td>When true, re-render the grid on window resize</td>
+                        </tr>
+                        <tr>
+                            <td>photoClickCallback</td>
+                            <td>function</td>
+                            <td>Photo click callback</td>
+                        </tr>
+                        <tr>
+                            <td>fitWidthLastRow</td>
+                            <td>true, false</td>
+                            <td>In Increase mode, true will increase last row to fit grid width</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <hr>
+                <footer>
+                    <p>&copy; <a href="http://www.webdeveasy.com" target="_blank">http://www.webdeveasy.com</a> naorye 2013</p>
+                </footer>
+            </div>
+        </div>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+        <script>window.jQuery.ui || document.write('<script src="js/vendor/jquery-ui-1.10.2.custom.min.js"><\/script>')</script>
 
         <script src="js/vendor/bootstrap.min.js"></script>
 
@@ -77,6 +254,84 @@
             (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
             g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
             s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+
+
+        <table>
+            <tr>
+                <td><img class="img1" /></td>
+                <td rowspan="2"><img class="img3" /></td>
+            </tr>
+            <tr>
+                <td><img class="img2" /></td>
+            </tr>
+        </table>
+        <br/>
+        <br/>
+        <table>
+            <tr>
+                <td><img class="img1o" /></td>
+                <td rowspan="2"><img class="img3o" /></td>
+            </tr>
+            <tr>
+                <td><img class="img2o" /></td>
+            </tr>
+        </table>
+        <script>
+            var url1 = "http://fmaul.de/gallery-grid-example/thumbs/api/node/workspace/SpacesStore/acddde8a-3573-4206-a88e-22b4c312b4c1/content/thumbnails/galpThumb120.jpeg",
+                url2 = "http://fmaul.de/gallery-grid-example/thumbs/api/node/workspace/SpacesStore/a23e7258-5ebf-4ee2-acbc-8dbba78815da/content/thumbnails/galpThumb120.jpeg",
+                url3 = "http://fmaul.de/gallery-grid-example/thumbs/api/node/workspace/SpacesStore/85c57284-da5d-40e2-a5be-0976b03167a1/content/thumbnails/galpThumb120.jpeg";
+                //url1 = "http://fmaul.de/gallery-grid-example/thumbs/api/node/workspace/SpacesStore/634fa295-c303-49f6-a0e8-69a69fd5ae8e/content/thumbnails/galpThumb120.jpeg",
+                //url2 = "http://fmaul.de/gallery-grid-example/thumbs/api/node/workspace/SpacesStore/5689105c-65e5-415b-a8f1-b7e529920fa1/content/thumbnails/galpThumb120.jpeg",
+                //url3 = "http://fmaul.de/gallery-grid-example/thumbs/api/node/workspace/SpacesStore/5f37f034-bdb4-4466-aa80-be13fd18f8d4/content/thumbnails/galpThumb120.jpeg";
+                
+            var totalHeight = 400;
+
+            
+            $(".img1o").attr("src", url1)
+            $(".img2o").attr("src", url2)
+            $(".img3o").attr("src", url3)
+
+
+            $(".img1").attr("src", url1).load(function() {
+                var h1 = $(".img1").height(),
+                    w1 = $(".img1").width();
+                $(".img2").attr("src", url2).load(function() {
+                    var h2 = $(".img2").height(),
+                        w2 = $(".img2").width();
+                    $(".img3").attr("src", url3).load(function() {
+                        var h3 = $(".img3").height(),
+                            w3 = $(".img3").width();
+
+                        console.log("h1=",h1,"w1=",w1,"h2=",h2,"w2=",w2,"h3=",h3,"w3=",w3);
+                        
+                        h1 = w2 * h1 / w1;
+                        w1 = w2;
+                        $(".img1").height(h1).width(w1);
+
+                        console.log("h1=",h1,"w1=",w1,"h2=",h2,"w2=",w2,"h3=",h3,"w3=",w3);
+
+                        w3 = w3 * (h2 + h1) / h3;
+                        h3 = h2 + h1;
+                        $(".img3").height(h3).width(w3);
+
+                        console.log("h1=",h1,"w1=",w1,"h2=",h2,"w2=",w2,"h3=",h3,"w3=",w3);
+
+                        var x = totalHeight / h3;
+                        h3 *= x;
+                        w3 *=x;
+                        h2 *= x;
+                        w2 *=x;
+                        h1 *= x;
+                        w1 *=x;
+                        $(".img1").height(h1).width(w1);
+                        $(".img2").height(h2).width(w2);
+                        $(".img3").height(h3).width(w3);
+
+                    });
+                });
+            });
+
         </script>
     </body>
 </html>

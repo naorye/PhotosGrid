@@ -1,22 +1,84 @@
+body {
+    min-width: 410px;
+    padding-top: 0;
+}
 
+section {
+    padding-top: 30px;
+}
 
-/* ==========================================================================
-   Author's custom styles
-   ========================================================================== */
+.tbl {
+    display: table;
+}
 
+.tbl-cl {
+    display: table-cell;
+}
 
+.w70 {
+    width: 70px;
+}
 
+.w200 {
+    width: 200px;
+}
 
+.navbar-anchor  {
+    padding-top: 41px;
+}
 
+.row {
+    padding-left: 10px;
+}
 
+.build-example .hero-unit {
+    font-size: 14px;
+    line-height: 20px;
+    padding: 20px;
+}
 
+.build-example .properties {
+    margin-left: 40px;
+}
 
+.build-example .properties td:nth-child(2) {
+    padding-left: 10px;
+}
 
+.build-example .properties td:nth-child(3) {
+    padding-left: 50px;
+    color: gray;
+}
 
+.build-example .properties select,
+.build-example .properties input {
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
 
+}
 
+@media (max-width: 979px) {
+    .build-example .properties td:nth-child(3) {
+        display: none;
+    }
+    .navbar-anchor  {
+        padding-top: 0;
+    }
+}
 
-
-
-
-
+@media (max-width: 550px) {
+    .w200 {
+        width: 100px;
+    }
+    h3 {
+        font-size: 19px;
+        line-height: 25px;
+    }
+    .lead {
+        font-size: 17px;
+        line-height: 22px;
+        margin-bottom: 15px;
+    }
+}

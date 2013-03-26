@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <style>
+            body {
+                padding-top: 60px;
+                padding-bottom: 40px;
+            }
+        </style>
+        <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+        <link rel="stylesheet" href="css/photos-grid.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
+
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="#">Photos Grid</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="examples-tabs" class="tabbable tabs-left">
+            <ul class="nav nav-tabs">
+                <li>
+                    <a id="example-1-tab" href="#example-1" data-toggle="tab">
+                        <small>Example 1</small>
+                        <br/>
+                        <strong>Decrease mode</strong>
+                    </a>
+                </li>
+                <li>
+                    <a id="example-2-tab" href="#example-2" data-toggle="tab">
+                        <small>Example 2</small>
+                        <br/>
+                        <strong>Increase mode</strong>
+                    </a>
+                </li>
+                <li>
+                    <a id="example-3-tab" href="#example-3" data-toggle="tab">
+                        <small>Example 3</small>
+                        <br/>
+                        <strong>XXXX</strong>
+                    </a>
+                </li>
+                <li>
+                    <a id="example-4-tab" href="#example-4" data-toggle="tab">
+                        <small>Example 4</small>
+                        <br/>
+                        <strong>XXXX</strong>
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+
+
+                <div id="example-1" class="tab-pane active">
+                    <h4>Example 1: Photos grid in decrease mode</h4>
+                    <p class="lead">
+                        <small>
+                            In decrease mode, each row filled by photos until
+                            there is no room left. Overflow photos will
+                            cause decrese in row's photos widths.  
+                        </small>
+                    </p>
+<pre class="no-style">$(".photos-grid").photosGrid({
+    url: "example-data/images.json",
+    data_width: "width",
+    data_height: "height",
+    data_url: "url",
+    mode: "decrease",
+    margin: 3,
+    handleWindowResize: true
+});</pre>
+                    <div class="photos-grid-example-1"></div>
+                </div>
+
+                <div id="example-2" class="tab-pane">
+                    <h4>Example 2: Photos grid in increase mode</h4>
+                    <p class="lead">
+                        <small>
+                            In increase mode, each row filled by photos until
+                            the next photo has no space left. Then empty space
+                            spread equally between row's photos.  
+                        </small>
+                    </p>
+<pre class="no-style">$(".photos-grid").photosGrid({
+    url: "example-data/images.json",
+    data_width: "width",
+    data_height: "height",
+    data_url: "url",
+    mode: "increase",
+    margin: 3,
+    handleWindowResize: true
+});</pre>
+                    <div class="photos-grid-example-2"></div>
+                </div>
+
+
+                <div id="example-3" class="tab-pane">
+                    <h4>Example 3</h4>
+
+                    <div class="build-example">
+                        $(".photos-grid").photosGrid({
+                            <table class="properties">
+                                <tr>
+                                    <td>url:</td>
+                                    <td>"example-data/images.json",</td>
+                                    <td>// URL for the json data</td>
+                                </tr>
+                                <tr>
+                                    <td>data_width:</td>
+                                    <td>"width",</td>
+                                    <td>// Name of the property that represents the width</td>
+                                </tr>
+                                <tr>
+                                    <td>data_height:</td>
+                                    <td>"height",</td>
+                                    <td>// Name of the property that represents the height</td>
+                                </tr>
+                                <tr>
+                                    <td>data_url:</td>
+                                    <td>"url",</td>
+                                    <td>// Name of the property that represents the url</td>
+                                </tr>
+                                <tr>
+                                    <td>mode:</td>
+                                    <td>
+                                        <select>
+                                            <option>decrease</option>
+                                            <option>increase</option>
+                                        </select> ,
+                                    </td>
+                                    <td>// The mode of the Photo Grid: decrese or increse</td>
+                                </tr>
+                                <tr>
+                                    <td>maxWidth:</td>
+                                    <td>
+                                        <input type="text" size="5" value="900" /> px,
+                                    </td>
+                                    <td>// Max width in pixels of the grid, container width when not provided</td>
+                                </tr>
+                                <tr>
+                                    <td>margin:</td>
+                                    <td>
+                                        <input type="text" size="3" value="3" /> px,
+                                    </td>
+                                    <td>// Margin between photos in pixels</td>
+                                </tr>
+                                <tr>
+                                    <td>handleWindowResize:</td>
+                                    <td>
+                                        <select>
+                                            <option>true</option>
+                                            <option>false</option>
+                                        </select> ,
+                                    </td>
+                                    <td>// When true, re-render the grid on window resize</td>
+                                </tr>
+                                <tr>
+                                    <td>photoClickCallback:</td>
+                                    <td>
+                                        <select>
+                                            <option>select</option>
+                                            <option>alert</option>
+                                        </select> ,
+                                    </td>
+                                    <td>// Demonstration of photo click callback</td>
+                                </tr>
+                            </table>
+                        });
+                    </div>
+                    <div class="photos-grid-example-3"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" style="display:none;">
+
+            <!-- Main hero unit for a primary marketing message or call to action -->
+            <div class="hero-unit">
+                <h1>Photos Grid</h1>
+                <p>Photos Grid is a grid plugin for photos.</p>
+                <h2>Demo:</h2>
+
+                <div class="photos-grid"></div>
+
+            </div>
+
+            <hr>
+
+            <footer>
+                <p>&copy; Company 2012</p>
+            </footer>
+
+        </div> <!-- /container -->
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+
+        <script src="js/vendor/bootstrap.min.js"></script>
+
+        <script src="js/plugins.js"></script>
+        <script src="js/photos-grid.js"></script>
+        <script src="js/main.js"></script>
+
+        <script>
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+    </body>
+</html>
