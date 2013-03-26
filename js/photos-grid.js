@@ -193,7 +193,10 @@
             maxWidth: null,
             margin: 3,
             handleWindowResize: true,
-            photoClickCallback: null
+            photoClickCallback: null,
+
+            // IncreasedGridRowGenerator options 
+            fitWidthLastRow: false
         },
         parseOptions: function(options) {
             options = options || {};
@@ -241,8 +244,18 @@
             this.items = items;
             this.renderGrid();
 
+            var scope = this;
             if (this.options.handleWindowResize) {
-                $(window).resize($.proxy(this.renderGrid, this));
+                this.resizeTimeoutId = null;
+                $(window).resize(function() {
+                    if (scope.resizeTimeoutId !== null) {
+                        clearTimeout(scope.resizeTimeoutId);
+                    }
+                    scope.resizeTimeoutId = setTimeout(function() {
+                        scope.renderGrid();
+                        scope.resizeTimeoutId = null;
+                    }, 200);
+                });
             }
         },
         createItemsCopy: function() {
