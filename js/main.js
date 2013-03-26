@@ -5,7 +5,13 @@ $(document).ready(function() {
     }
 
     function selectPhoto(photo, elem) {
-        alert(photo);
+        var borderLayer = elem.find('.border-layer');
+        if (borderLayer.length > 0) {
+            borderLayer.remove();
+        } else {
+            var anchor = elem.find('.photo-anchor');
+            $('<div class="border-layer"></div>').appendTo(anchor);
+        }
     }
 
     function matchOptions() {
