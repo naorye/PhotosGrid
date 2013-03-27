@@ -89,10 +89,13 @@ $(document).ready(function() {
     function renderGrid() {
         matchOptions();
         var elem = $('.photos-grid'),
-            controller = elem.data('PhotosGrid'),
+            controller = elem.data('photosGrid'),
             options = fetchOptions();
-        if (controller) { controller.destroy(); }
-        elem.photosGrid(options);
+        if (controller) {
+             controller.setOptions(options);
+        } else {
+            elem.photosGrid(options);
+        }
     }
 
     $([ '#mode-select',

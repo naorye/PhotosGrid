@@ -31,6 +31,15 @@
         getGenerator: function() {
             return $.proxy(this.generateGridRowModel, this);
         },
+        setOption: function(key, value) {
+            this.options[key] = value;
+        },
+        setOptions: function(options) {
+            options = options || {};
+            for (var key in options) {
+                this.setOption(key, options[key]);
+            }
+        },
         defaults: {
         }
     });
@@ -69,7 +78,7 @@
             while (items.length > 0 && len < totalWidth) {
                 item = items.shift();
                 row.push(item);
-                len += (item.width + this.margin * 2);
+                len += (item.width + this.options.margin * 2);
             }
 
             var delta = len - totalWidth;
@@ -116,25 +125,25 @@
 
             // Build a row of images until longer than totalWidth
             while (items.length > 0 &&
-                len + items[0].width + this.margin * 2 <= totalWidth) {
+                len + items[0].width + this.options.margin * 2 <= totalWidth) {
                 item = items.shift();
                 row.push(item);
-                len += (item.width + this.margin * 2);
+                len += (item.width + this.options.margin * 2);
             }
 
             // In case one image with padding is more then total width, the
             // first while loop creates an empty row. So we need to reduce the
             // first image so it will fit the total width
             if (row.length === 0 && items.length > 0 &&
-                len + items[0].width + this.margin * 2 > totalWidth) {
+                len + items[0].width + this.options.margin * 2 > totalWidth) {
                 item = items.shift();
 
                 var oldWidth = item.width;
-                item.width = totalWidth - this.margin * 2;
+                item.width = totalWidth - this.options.margin * 2;
                 item.height = item.height * item.width / oldWidth;
 
                 row.push(item);
-                len += (item.width + this.margin * 2);
+                len += (item.width + this.options.margin * 2);
             }
 
             var fixRowWidth = true;
@@ -160,12 +169,14 @@
                     item = row[i];
                     item.height = item.wrapper_height = newHeight;
                     item.width = item.wrapper_width = item.width * growthRatio;
+                    item.left_margin = 0;
                 }
             } else {
                 for (i = 0; i < row.length; i++) {
                     item = row[i];
                     item.wrapper_height = item.height;
                     item.wrapper_width = item.width;
+                    item.left_margin = 0;
                 }
             }
 
@@ -176,9 +187,8 @@
     var PhotosGrid = function (container, options) {
         this.originalClass = container.attr("class");
         this.container = container.addClass("photos-grid");
-        this.parseOptions(options);
-
-        this.fetchData($.proxy(this.dataFetched, this));
+        this.windowResizeHandler = $.proxy(this.windowResizeHandler, this);
+        this.launchProcess(options);
     };
     $.extend(PhotosGrid.prototype, {
         defaults: {
@@ -198,12 +208,79 @@
             // IncreasedGridRowGenerator options 
             fitWidthLastRow: false
         },
-        parseOptions: function(options) {
+        launchProcess: function(options) {
+            var oldOptions = this.options,
+                dataRelatedOptionsChanged = false;
+
             options = options || {};
-            this.options = $.extend({}, this.defaults, options);
-            this.margin = Utils.parseSize(this.options.margin);
-            this.setMaxWidth(this.options.maxWidth);
-            this.setMode(this.options.mode);
+            this.options = $.extend({}, this.defaults, this.options, options);
+
+            for (var key in this.options) {
+                var oldValue = oldOptions && oldOptions[key],
+                    newValue = this.options[key];
+                if (oldValue !== newValue) {
+                    switch (key) {
+                        case 'margin':
+                            this.margin = Utils.parseSize(newValue);
+                            this.rowGenerator.setOption('margin', this.margin);
+                            break;
+                        case 'maxWidth':
+                            this.setMaxWidth(newValue);
+                            break;
+                        case 'mode':
+                            this.setMode(newValue);
+                            break;
+                        case 'handleWindowResize':
+                            // Using !oldValue instead of '=== false' because
+                            // when initialize the oldValue is undefined
+                            if (!oldValue && newValue === true) {
+                                //listen to window resize
+                                this.resizeTimeoutId = null;
+                                $(window).resize(this.windowResizeHandler);
+                            } else if (oldValue === true && newValue === false) {
+                                //stop listenning to window resize
+                                if (this.resizeTimeoutId !== null) {
+                                    clearTimeout(this.resizeTimeoutId);
+                                    this.resizeTimeoutId = null;
+                                }
+                                $(window).unbind('resize', this.windowResizeHandler);
+                            }
+                            break;
+                        case 'photoClickCallback':
+                            // Do nothing since renderPhoto unbind and bind
+                            // the new click callback
+                            break;
+                        case 'fitWidthLastRow':
+                            this.rowGenerator.setOption('fitWidthLastRow', newValue);
+                            break;
+                        case 'url':
+                        case 'data':
+                        case 'dataFetcher':
+                        case 'data_photoUrl':
+                        case 'data_height':
+                        case 'data_width':
+                        case 'data_href':
+                            dataRelatedOptionsChanged = true;
+                            break;
+                    }
+                }
+            }
+
+            if (dataRelatedOptionsChanged) {
+                this.fetchData(this.renderGrid, this);
+            } else {
+                this.renderGrid();
+            }
+        },
+        windowResizeHandler: function() {
+            if (this.resizeTimeoutId !== null) {
+                clearTimeout(this.resizeTimeoutId);
+            }
+            var scope = this;
+            this.resizeTimeoutId = setTimeout(function() {
+                scope.renderGrid();
+                scope.resizeTimeoutId = null;
+            }, 200);
         },
         setMaxWidth: function(maxWidth) {
             maxWidth = Utils.parseSize(maxWidth);
@@ -214,62 +291,65 @@
             }
         },
         setMode: function(mode) {
-            var generator = null;
             mode = mode && mode.toLowerCase();
             this.generateGridRowModel = null;
             switch(mode) {
                 case "increase":
-                    generator = new IncreasedGridRowGenerator(this.container, this.margin, this.options);
-                    this.generateGridRowModel = generator.getGenerator();
+                    this.rowGenerator = new IncreasedGridRowGenerator(this.container, this.margin, this.options);
+                    this.generateGridRowModel = this.rowGenerator.getGenerator();
                     break;
                 case "decrease":
-                    generator = new DecreasedGridRowGenerator(this.container, this.margin, this.options);
-                    this.generateGridRowModel = generator.getGenerator();
+                    this.rowGenerator = new DecreasedGridRowGenerator(this.container, this.margin, this.options);
+                    this.generateGridRowModel = this.rowGenerator.getGenerator();
                     break;
                 default:
                     throw mode + " is not a valid mode. use increase / decrease only.";
             }
         },
-        fetchData: function(callback) {
+        setOption: function(key, value) {
+            var options = {};
+            options[key] = value;
+            this.setOptions(options);
+        },
+        setOptions: function(options) {
+            this.launchProcess(options);
+        },
+        fetchData: function(callback, context) {
+            var _callback = $.proxy(function(items) {
+                this.items = items;
+                this.internalItems = null;
+
+                callback.call(context);
+            }, this);
             if (this.options.data) {
-                callback(this.options.data);
+                _callback(this.options.data);
             } else if (this.options.url) {
-                $.getJSON(this.options.url, callback);
+                $.getJSON(this.options.url, _callback);
             } else if (this.options.dataFetcher &&
                 typeof this.options.dataFetcher === "function") {
-                this.options.dataFetcher(callback);
-            }
-        },
-        dataFetched: function(items) {
-            this.items = items;
-            this.renderGrid();
-
-            var scope = this;
-            if (this.options.handleWindowResize) {
-                this.resizeTimeoutId = null;
-                $(window).resize(function() {
-                    if (scope.resizeTimeoutId !== null) {
-                        clearTimeout(scope.resizeTimeoutId);
-                    }
-                    scope.resizeTimeoutId = setTimeout(function() {
-                        scope.renderGrid();
-                        scope.resizeTimeoutId = null;
-                    }, 200);
-                });
+                this.options.dataFetcher(_callback);
             }
         },
         createItemsCopy: function() {
-            var itemsCopy = [];
-            for (var i = 0; i < this.items.length; i++) {
-                itemsCopy.push({
-                    url: this.items[i][this.options.data_photoUrl],
-                    width: this.items[i][this.options.data_width],
-                    height: this.items[i][this.options.data_height],
-                    href: this.items[i][this.options.data_href],
-                    originalItem: this.items[i]
-                });
+            var i;
+            if (!this.internalItems) {
+                this.internalItems = [];
+                for (i = 0; i < this.items.length; i++) {
+                    this.internalItems.push({
+                        url: this.items[i][this.options.data_photoUrl],
+                        width: this.items[i][this.options.data_width],
+                        height: this.items[i][this.options.data_height],
+                        href: this.items[i][this.options.data_href],
+                        originalItem: this.items[i]
+                    });
+                }
+            } else {
+                for (i = 0; i < this.internalItems.length; i++) {
+                    $.extend(this.internalItems[i], this.internalItems[i].originalItem);
+                }
             }
-            return itemsCopy;
+            // Returns copy of the internal items array
+            return this.internalItems.slice(0);
         },
         generateGridModel: function() {
             var itemsCopy = this.createItemsCopy();
@@ -285,27 +365,34 @@
 
             return rows;
         },
-        createPhoto: function(photo) {
+        renderPhoto: function(photo) {
             if (!photo) { return; }
-            var photoStructure =
-                "<div class='photo-container'>" +
-                    "<div class='photo-wrapper'>" +
-                        "<a class='photo-anchor'><img /></a>" +
-                    "</div>" +
-                "</div>";
+            if (!photo.photoElem) {
 
-            var photoElem = photo.photoElem = $(photoStructure).css({
-                margin: this.margin + "px"
-            });
-            photoElem.find(".photo-wrapper").css({
+                var photoStructure =
+                    "<div class='photo-container'>" +
+                        "<div class='photo-wrapper'>" +
+                            "<a class='photo-anchor'>" +
+                                "<img src='" + photo.url +"' /></a>" +
+                        "</div>" +
+                    "</div>";
+
+                photo.photoElem = $(photoStructure);
+            }
+
+            photo.photoElem
+                .css({ margin: this.margin + "px" });
+
+            photo.photoElem.find(".photo-wrapper").css({
                 width: (photo.wrapper_width || 120) + "px",
                 height: (photo.wrapper_height || 120) + "px"
             });
 
             /* jshint scripturl:true */
             var href = photo.href ? photo.href : "javascript:void(0);";
-            photoElem.find(".photo-anchor")
+            photo.photoElem.find(".photo-anchor")
                 .attr("href", href)
+                .unbind('click')
                 .click($.proxy(function() {
                     var photoClickCallback = this.options.photoClickCallback,
                         container = this.container;
@@ -315,32 +402,40 @@
                     }
                     container.trigger("photo-click", photo.originalItem);
                 }, this));
-            photoElem.find("img")
-                .attr("src", photo.url)
+
+            photo.photoElem.find("img")
                 .css({
                     width: (photo.width || 120) + "px",
                     height: (photo.height || 120) + "px",
                     "margin-left": (photo.left_margin ? -photo.left_margin : 0) +"px"
                 });
 
-            return photoElem;
+            return photo.photoElem;
         },
         renderGrid: function() {
-            this.container.empty();
+            //this.container.empty();
 
             var gridModel = this.generateGridModel();
 
-            var clearfix = $("<div class='clearfix'></div>")
-                .appendTo(this.container);
+            var clearfix = this.container.find('.clearfix');
+            if (clearfix.length === 0) {
+                clearfix= $("<div class='clearfix'></div>")
+                    .appendTo(this.container);
+            }
 
             for(var rowIndex in gridModel) {
                 for(var photoIndex in gridModel[rowIndex]) {
                     var photo = gridModel[rowIndex][photoIndex];
-                    this.createPhoto(photo).insertBefore(clearfix);
+                    if (!photo.photoElem) {
+                        this.renderPhoto(photo).insertBefore(clearfix);
+                    } else {
+                        this.renderPhoto(photo);
+                    }
                 }
             }
         },
         destroy: function() {
+            $(window).unbind('resize', this.windowResizeHandler);
             this.container.find('.photo-anchor').unbind('click');
             this.container
                 .removeClass('photos-grid')
