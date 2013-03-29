@@ -1,16 +1,15 @@
 (function($) {
 
-    function inherit(base, methods) {
-        var sub = function() {
-            base.apply(this, arguments);
-        };
-        sub.prototype = Object.create(base.prototype);
-        $.extend(sub.prototype, methods);
-        return sub;
-    }
-
     var Utils = {
-        parseSize: function(size) {
+        extend: function (base, methods) {
+            var sub = function() {
+                base.apply(this, arguments);
+            };
+            sub.prototype = Object.create(base.prototype);
+            $.extend(sub.prototype, methods);
+            return sub;
+        },
+        parseSize: function (size) {
             size = parseFloat(size);
             if (isNaN(size)) {
                 size = null;
@@ -44,7 +43,7 @@
         }
     });
 
-    var DecreasedGridRowGenerator = inherit(GridRowGenerator, {
+    var DecreasedGridRowGenerator = Utils.extend(GridRowGenerator, {
         calculateCutOff: function(len, delta, items) {
             var cutoff = [],
                 cutsum = 0,
@@ -112,7 +111,7 @@
         }
     });
 
-    var IncreasedGridRowGenerator = inherit(GridRowGenerator, {
+    var IncreasedGridRowGenerator = Utils.extend(GridRowGenerator, {
         defaults: {
             fitWidthLastRow: false
         },
