@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Document-Bootstrap</title>
+        <!-- Mobile viewport optimized -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <!-- Mobile Internet Explorer allows us to activate ClearType technology for smoothing fonts for easy reading -->
+        <meta http-equiv="cleartype" content="on">
+
+        <!-- Le styles -->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/black-tie/jquery-ui.css" rel="stylesheet">
+        <link href="css/jquery.tocify.css" rel="stylesheet">
+        <link href="css/prettify.css" type="text/css" rel="stylesheet" />
+        <link href="css/styles.css" type="text/css" rel="stylesheet" />
+        <link href="css/index.css" type="text/css" rel="stylesheet" />
+
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <!-- Le fav and touch icons -->
+        <link rel="shortcut icon" href="../assets/ico/favicon.ico">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+        <style>
+            @media (max-width: 767px) {
+                #toc {
+                    position: relative;
+                    width: 100%;
+                    margin: 0px 0px 20px 0px;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <a href="#" target="_blank" id="fork-me">
+            <img style="position: fixed;top: 0; right: 0; border: 0;z-index:999999;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" />
+        </a>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="#">Photos Grid</a>
+
+                    <div class="nav-collapse">
+                        <ul class="nav">
+                            <li class="active">
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li>
+                                <a href="http://www.webdeveasy.com" target="_blank">WebDevEasy</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span3 tocify">
+                    <div id="toc"></div>
+                </div>
+                <div class="span9">
+                    <div class="hero-unit">
+                        <h1>Photos Grid</h1>
+                        <br /><br />
+
+                        <h2>Description</h2>
+                        <p>
+                            Photos Grid is a jQuery plugin that lets you create elegant grid of photos easily.
+                            <br />
+                            The project is maintained by <a href="http://www.webdeveasy.com" target="_blank">naorye</a>.
+                        </p>
+                        <p>
+                            <a class="btn btn-primary btn-large" href="https://github.com/naorye/PhotosGrid" target="_blank">Fork on Github &raquo;</a>
+                            <a class="btn btn-success btn-large" href="https://github.com/naorye/PhotosGrid" target="_blank">Download Code &raquo;</a>
+                        </p>
+                    </div>
+
+                    <h2>Demo</h2>
+                    <p class="well note">
+                        Here you can find Photos Grid demo. You can change the options and watch the result below.
+                    </p>
+                    <div class="demo">
+                        $(".photos-grid").photosGrid({
+                            <table class="properties">
+                                <tr>
+                                    <td>url:</td>
+                                    <td>"example-data/images.json",</td>
+                                    <!--<td>// URL for the json data</td>-->
+                                </tr>
+                                <tr>
+                                    <td>data_width:</td>
+                                    <td>"width",</td>
+                                    <!--<td>// Name of the property that represents the width</td>-->
+                                </tr>
+                                <tr>
+                                    <td>data_height:</td>
+                                    <td>"height",</td>
+                                    <!--<td>// Name of the property that represents the height</td>-->
+                                </tr>
+                                <tr>
+                                    <td>data_url:</td>
+                                    <td>"url",</td>
+                                    <!--<td>// Name of the property that represents the url</td>-->
+                                </tr>
+                                <tr>
+                                    <td>mode:</td>
+                                    <td>
+                                        <select id="mode-select">
+                                            <option>decrease</option>
+                                            <option>increase</option>
+                                        </select> ,
+                                    </td>
+                                    <!--<td>// The mode of the Photo Grid: decrese or increse</td>-->
+                                </tr>
+                                <tr>
+                                    <td>maxWidth:</td>
+                                    <td>
+                                        <div class="tbl">
+                                            <div class="tbl-cl w70"><span id="maxWidth-slider-value"></span> px,</div>
+                                            <div class="tbl-cl w200"><div id="maxWidth-slider"></div></div>
+                                        <div>
+                                    </td>
+                                    <!--<td>// Max width of the grid in pixels</td>-->
+                                </tr>
+                                <tr>
+                                    <td>margin:</td>
+                                    <td>
+                                        <div class="tbl">
+                                            <div class="tbl-cl w70"><span id="margin-slider-value"></span> px,</div>
+                                            <div class="tbl-cl w200"><div id="margin-slider"></div></div>
+                                        <div>
+                                    </td>
+                                    <!--<td>// Margin between photos in pixels</td>-->
+                                </tr>
+                                <tr>
+                                    <td>handleWindowResize:</td>
+                                    <td>
+                                        <select id="handleWindowResize-select">
+                                            <option>true</option>
+                                            <option>false</option>
+                                        </select> ,
+                                    </td>
+                                    <!--<td>// When true, re-render the grid on window resize</td>-->
+                                </tr>
+                                <tr>
+                                    <td>photoClickCallback:</td>
+                                    <td>
+                                        <select id="photoClickCallback-select">
+                                            <option>select</option>
+                                            <option>alert</option>
+                                        </select> ,
+                                    </td>
+                                    <!--<td>// Demonstration of photo click callback</td>-->
+                                </tr>
+                                <tr>
+                                    <td>fitWidthLastRow:</td>
+                                    <td>
+                                        <select id="fitWidthLastRow-select">
+                                            <option>true</option>
+                                            <option>false</option>
+                                        </select>
+                                    </td>
+                                    <!--<td>// In Increase mode, true will increase last row to fit grid width</td>-->
+                                </tr>
+                            </table>
+                        });
+                        <hr>
+                        <div class="photos-grid-wrapper">
+                            <div class="photos-grid"></div>
+                        </div>
+                    </div>
+
+                    <br />
+                    <h2>Installation</h2>
+                    <br />
+                    <p class="well">
+                        Installation
+                    </p>
+
+                    <br />
+                    <h2>Usage</h2>
+                    <br />
+                    <p class="well">
+                        Usage
+                    </p>
+
+                    <br />
+                    <h2>Options</h2>
+                    <br />
+                    <p class="well">
+                        Options
+                    </p>
+
+                    <br />
+                    <h2>Costumization</h2>
+                    <br />
+                    <p class="well">
+                        Costumization
+                    </p>
+
+
+
+
+          <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+          <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+          <k2>Getting Started</k2>
+          <br />
+          <p><k3><a href="customDownload.html">Custom Download</k3></a></p>
+          <p class="well">
+          <span class="note"><strong>Note: </strong> All of the plugin files are in the <code>src</code> directory (this includes both the JavaScript and CSS files). If you want to see an example page with all of the files included, look in the <code>demos</code> directory.
+          </span>
+          </p>
+          <k3>HTML</k3>
+          </p>
+          <p class="well note">
+          Enter HTML Instructions Here
+          </p>
+          <pre class="prettyprint">
+          // Include appropriate HTML code if needed
+          &lt;div&gt;&lt;/div&gt;
+          </pre>
+          <p>
+          <k3>CSS</k3>
+          </p>
+          <p class="well note">
+          Enter CSS Instructions Here
+          </p>
+          <pre class="prettyprint">
+          // Include appropriate CSS code if needed
+          body {
+          }
+          </pre>
+          <p>
+          <k3>JavaScript</k3>
+          </p>
+          <p class="well note">
+              Enter JavaScript Instructions Here
+          </p>
+          <pre class="prettyprint">
+              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
+              $(function() {
+
+              });
+          </pre>
+          <k2>Options</k2>
+          <p class="well note">
+              Enter Options Instructions Here
+          </p>
+    
+          <k3>Options</k3>
+          <table class="table table-striped table-bordered table-condensed">
+              <tr>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Default</th>
+                  <th>Parameters</th>
+              </tr>
+              <tr>
+                  <td class="optionName" title="Option Name" data-content="Enter Option Description Here">
+                      <a href="#">Option Name</a>
+                  </td>
+                  <td>Enter Option Type Here</td>
+                  <td>Enter Option Default Here</td>
+                  <td>Enter Option Parameters Here</td>
+              </tr>
+              <tr>
+                  <td class="optionName" title="Option Name" data-content="Enter Option Description Here">
+                      <a href="#">Option Name</a>
+                  </td>
+                  <td>Enter Option Type Here</td>
+                  <td>Enter Option Default Here</td>
+                  <td>Enter Option Parameters Here</td>
+              </tr>
+              <tr>
+                  <td class="optionName" title="Option Name" data-content="Enter Option Description Here">
+                      <a href="#">Option Name</a>
+                  </td>
+                  <td>Enter Option Type Here</td>
+                  <td>Enter Option Default Here</td>
+                  <td>Enter Option Parameters Here</td>
+              </tr>
+              <tr>
+                  <td class="optionName" title="Option Name" data-content="Enter Option Description Here">
+                      <a href="#">Option Name</a>
+                  </td>
+                  <td>Enter Option Type Here</td>
+                  <td>Enter Option Default Here</td>
+                  <td>Enter Option Parameters Here</td>
+              </tr>
+              <tr>
+                  <td class="optionName" title="Option Name" data-content="Enter Option Description Here">
+                      <a href="#">Option Name</a>
+                  </td>
+                  <td>Enter Option Type Here</td>
+                  <td>Enter Option Default Here</td>
+                  <td>Enter Option Parameters Here</td>
+              </tr>
+              <tr>
+                  <td class="optionName" title="Option Name" data-content="Enter Option Description Here">
+                      <a href="#">Option Name</a>
+                  </td>
+                  <td>Enter Option Type Here</td>
+                  <td>Enter Option Default Here</td>
+                  <td>Enter Option Parameters Here</td>
+              </tr>
+              <tr>
+                  <td class="optionName" title="Option Name" data-content="Enter Option Description Here">
+                      <a href="#">Option Name</a>
+                  </td>
+                  <td>Enter Option Type Here</td>
+                  <td>Enter Option Default Here</td>
+                  <td>Enter Option Parameters Here</td>
+              </tr>
+              <tr>
+                  <td class="optionName" title="Option Name" data-content="Enter Option Description Here">
+                      <a href="#">Option Name</a>
+                  </td>
+                  <td>Enter Option Type Here</td>
+                  <td>Enter Option Default Here</td>
+                  <td>Enter Option Parameters Here</td>
+              </tr>
+          </table>
+          <br />
+          <k2>Contributing</k2>
+          <p class="well">
+              Take care to maintain the existing coding style. Add <strong>Enter Unit Testing Framework</strong> unit tests for any new or changed functionality. Lint and test your code using <strong>Enter Build Tool Here</strong>.
+          </p>
+          <p class="well">
+              <span class="note">
+                  After you have verified your code, send a pull request to the <em>Enter Project Name Here</em> develop branch.  After you send a pull request, you will hear back from me shortly after I review your code.  You’ll find source code in the <code>src</code> subdirectory!
+              </span>
+          </p>
+          <br />
+          <k2>Extending</k2>
+          <p class="well">
+              If you find that you need a feature that <em>Enter Project Name Here</em> does not currently support, either let me know via the <a href="#" target="_blank">Github issue tracker</a>, or <a href="#" target="_blank">fork the project</a> and and easily extend <em>Enter Project Name Here</em>!
+          </p>
+      </div><!--/row-->
+      <hr>
+      <div class="navbar" style="margin:0 auto;width:15%;">
+        <p>
+            Copyright &copy; 2012 Enter Author Name Here
+            <br /><br />
+            Published by Github Pages
+        </p>
+      </div>
+    </div><!--/.fluid-container-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.custom.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/history.js"></script>
+    <script src="js/jquery.tocify.min.js"></script>
+    <script src="js/prettify.js"></script>
+    <script src="js/githubrepo.js"></script>
+    <script>
+        $(function() {
+
+            $("#toc").tocify({ selectors: "h2, h3, h4", scrollTo: 60, highlightOffset: 60, extendPage: true });
+
+            prettyPrint();
+
+            $(".optionName").popover({ trigger: "hover" });
+
+            $("a[href='#']").click(function(event) {
+ 
+                event.preventDefault();
+
+            });
+
+        });
+    </script>
+  </body>
+</html>

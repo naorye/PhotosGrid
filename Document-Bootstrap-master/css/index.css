@@ -1,0 +1,35 @@
+/* Demo */
+
+.demo {
+    font-size: 14px;
+    line-height: 20px;
+    padding: 5px;
+}
+
+.demo .properties {
+    margin-left: 40px;
+}
+
+.demo .properties td:nth-child(2) {
+    padding-left: 10px;
+}
+
+.demo .properties td:nth-child(3) {
+    padding-left: 50px;
+    color: gray;
+}
+
+.demo .properties select,
+.demo .properties input {
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+
+}
+
+@media (max-width: 979px) {
+    .demo .properties td:nth-child(3) {
+        display: none;
+    }
+}
