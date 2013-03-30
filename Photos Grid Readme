@@ -1,0 +1,53 @@
+Photos Grid
+Photos Grid is a jQuery plugin that lets you create elegant grid of photos easily.
+The project is maintained by <a href="http://www.webdeveasy.com" target="_blank">naorye</a>.
+
+
+Demo
+Here you can see Photos Grid in action. You can change the options and watch the result below.
+
+Installation
+------------
+PhotosGrid needs jQuery 1.8 and above in order to do its job. If you still don't have jQuery, download it <a href="http://www.jquery.com" target="_blank">here</a>.
+
+After downloading Photos Grid, add references to jquery.photos-grid.min.js and photos-grid.min.css:
+
+    <link rel="stylesheet" href="path/to/photos-grid.min.css">
+    ...
+    ...
+    <script src="path/to/jquery.photos-grid.min.js></script>
+
+(You can use photos-grid.js and photos-grid.css for development purposes).
+
+Usage
+-----
+In order to use Photos Grid you need photos (suprisingly). The photos urls can be provided to Photos Grid in 3 different ways:
+1. As data array of images urls
+2. As dataFetcher function:
+    function(next) {
+        var urls = [];
+        ... // Creating photos urls
+        ...
+
+        next(urls);
+    }
+3. Provide url 
+Then, in order to use Photos Grid simply do:
+$('#grid-placeholder').photosGrid({
+    data: [
+        'path/to/image/1',
+        'path/to/image/2',
+        ...
+        ...
+        'path/to/image/n',
+    ]
+});
+
+Where #grid-placeholder is an empty div in which you want the grid.
+
+Options
+
+Costumization
+
+
+
